@@ -74,7 +74,7 @@ RUN adduser --disabled-password --gecos '' appuser && \
 USER appuser
 
 # Collect static files (now with environment variables available)
-RUN python manage.py collectstatic --noinput
+#RUN python manage.py collectstatic --noinput
 
 # Expose port
 EXPOSE 8000
