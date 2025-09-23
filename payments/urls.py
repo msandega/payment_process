@@ -1,7 +1,10 @@
 from django.urls import path
-from . import views
+from django.http import JsonResponse
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
 
 urlpatterns = [
-    path('payments/', views.InitializePayment.as_view(), name='process_payment'),
-    path('payments/<uuid:payment_id>/', views.PaymentStatus.as_view(), name='payment_status')
+    path("health/", health_check, name="health_check"),  # 👈 put health check FIRST
+    path("payments/", lambda r: JsonResponse({"msg": "process_payment"}), name="process_payment"),
 ]
