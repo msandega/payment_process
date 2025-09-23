@@ -2,3 +2,5 @@ djangorestframework
 django
 drf-spectacular
 gunicorn
+python-decouple
+intasend-python  # IntaSend Python SDK
