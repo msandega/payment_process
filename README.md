@@ -1,3 +1,5 @@
+[![Django CI/CD Pipeline](https://github.com/msandega/payment_process/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/msandega/payment_process/actions/workflows/ci-cd.yml)
+
 ## Payment Processing System
 This repository contains a simple payment processing system implemented in Python. It is built to be modular and allow the addition of payment processors easily.
 
