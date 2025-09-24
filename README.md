@@ -1,52 +1,86 @@
 [![Django CI/CD Pipeline](https://github.com/msandega/payment_process/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/msandega/payment_process/actions/workflows/ci-cd.yml)
 
-## Payment Processing System
-This repository contains a simple payment processing system implemented in Python. It is built to be modular and allow the addition of payment processors easily.
+This project implements a complete CI/CD pipeline for a Django REST API Payment Gateway with Docker containerization, automated testing, and cloud deployment.
 
-## Running Locally
-1. Clone the repository:
-   ```bash
-   git clone git@github.com:kibelenny/payment_process.git
-    cd payment_process
-    ```
-2. Create a virtual environment and activate it:
-   ```bash
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
-3. Install the required packages:
-    ```bash
-    pip install -r requirements.txt
-    ```
-4. Run migrations:
-    ```bash
-    python manage.py migrate
-    ```
-5. Start the development server:
-    ```bash
-    python manage.py runserver
-    ```
-6. Access the application at `http://localhost:8000/api/v1/payments`.
-7. Swagger documentation is available at `http://localhost:8000/api/schema/swagger-ui/`.
+This project demonstrates **real-world DevOps practices** by taking a Django REST Framework (DRF) based **Payment Gateway API**, containerizing it with Docker, automating testing & deployment with GitHub Actions, and deploying it on the cloud (Render/Railway).  
 
-### Running Tests
-To run the tests, use the following command:
-    ```bash
-    python manage.py test
-    ```
+The backend team developed the API — this task focuses on **DevOps automation, reliability, and deployment**.
 
-## Deployment
-The application is deployed in Render. You can view it [here](https://payment-process-gx0i.onrender.com/api/v1/payments).  
-### Steps to deploy:
-1. Create a render account and link your GitHub repository.
-2. Create a new web service and select the repository.
-3. Set the following commands:
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `python manage.py runserver 0.0.0.0:8000`
-4. Set auto-deploy to off. Take note of the service ID and Render key in deploy hook provided.
-5. In the GitHub repository, add the following secrets to enable automatic deployment:
-   - `RENDER_SERVICE_ID`: Your Render service ID.
-   - `RENDER_API_KEY`: Your Render key.
-6. Push to the main branch to trigger tests and deployment.
+---
 
-**NOTE**: Remember to add the Render URL to the allowed hosts in `settings.py`
+## 🚀 Tech Stack
+- **Backend:** Django REST Framework (DRF)
+- **Containerization:** Docker
+- **CI/CD:** GitHub Actions
+- **Security:** Bandit, Trivy
+- **Cloud Deployment:** Render / Railway
+- **Registry:** Docker Hub / GitHub Container Registry (GHCR)
+
+---
+
+## 🛠 Features
+- RESTful API for handling payment initialization & status checks
+- Fully containerized with **Docker**
+- Automated pipeline for **tests, linting, and security scans**
+- Auto-deploys to cloud on merge to `main`
+- Secrets securely managed in **GitHub Actions**
+- Live demo URL exposed for testing
+
+---
+
+## 📦 Containerization
+
+### Build Image
+```bash
+docker build -t payments-api .
+
+Run Container
+docker run -p 8000:8000 --env-file .env payments-api
+
+🔄 CI/CD Pipeline
+On Pull Request
+
+✅ Run unit tests (python manage.py test)
+
+🔍 Linting & security scans (bandit, trivy)
+
+On Merge to main
+
+🏗️ Build & push Docker image to Docker Hub/GHCR
+
+🚀 Auto-deploy containerized app to Render/Railway
+
+🖥️ Deployment
+
+🔗 Live API URL:
+👉 https://payments-api.onrender.com/api/v1/payments
+
+🔐 Secrets Management
+
+All sensitive credentials (e.g., Paystack / Flutterwave / PayPal sandbox keys) are stored in GitHub Secrets:
+
+SECRET_KEY
+
+DATABASE_URL
+
+PAYSTACK_SECRET_KEY
+
+FLUTTERWAVE_SECRET_KEY
+
+📑 Example API Usage
+Initialize Payment
+curl -X POST https://payments-api.onrender.com/api/v1/payments/ \
+     -H "Content-Type: application/json" \
+     -d '{"amount": 1000, "currency": "USD", "email": "user@example.com"}'
+
+Check Payment Status
+curl https://payments-api.onrender.com/api/v1/payments/<payment_id>/
+
+📂 Project Structure
+.
+├── .github/workflows/django.yml   # CI/CD pipeline
+├── Dockerfile                     # Docker image definition
+├── .dockerignore                  # Files excluded from Docker builds
+├── payment_process/               # Django project
+├── payments/                      # Payments app (API logic)
+└── README.md                      # Documentation
